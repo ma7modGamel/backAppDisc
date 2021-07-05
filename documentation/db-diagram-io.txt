@@ -1,0 +1,111 @@
+table user {
+  id int
+  name varchar
+  email varchar
+  countr_id int
+  gender_id int
+  bio varchar(250)
+  image varchar
+  like_count int
+  call_count int
+  is_vip bool
+  is_admin bool
+}
+
+table countries {
+  id int
+  name json
+}
+
+table genders {
+  id int
+  name json
+}
+
+table topics {
+  id int
+  name json
+  live_count int
+}
+
+table preferences {
+  id int
+  name json
+}
+
+table user_preference{
+  id int 
+  user_id int
+  preference_value_id int
+}
+
+table preference_values {
+  id int 
+  preference_id int
+  name json
+  icon varchar
+}
+
+table calls{
+  id int
+  topic_id int
+  max_call_minutes int
+  
+}
+
+table call_users{
+  id int
+  user_id int
+  call_id int
+  vote int
+}
+
+table user_images{
+  id int
+  user_id int
+  image varchar
+}
+
+table packages{
+  id int
+  tag varchar
+  name json
+}
+
+table supscriptions{
+  id int
+  user_id int
+  package_id int
+}
+
+table supscription_event{
+  id int
+  supscription_id int
+  provider varchar
+  receipt json
+  is_income bool
+}
+
+Ref: "countries"."id" < "user"."countr_id"
+
+Ref: "genders"."id" < "user"."gender_id"
+
+Ref: "preference_values"."preference_id" < "preferences"."id"
+
+Ref: "user"."id" < "user_preference"."user_id"
+
+Ref: "preference_values"."id" < "user_preference"."preference_value_id"
+
+Ref: "calls"."id" < "call_users"."call_id"
+
+Ref: "topics"."id" < "calls"."topic_id"
+
+Ref: "user"."id" < "call_users"."user_id"
+
+Ref: "user"."id" < "user_images"."user_id"
+
+Ref: "user"."id" < "supscriptions"."user_id"
+
+Ref: "packages"."id" < "supscriptions"."package_id"
+
+Ref: "supscriptions"."id" < "supscription_event"."supscription_id"
